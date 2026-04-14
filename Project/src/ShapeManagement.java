@@ -5,13 +5,25 @@ public class ShapeManagement {
         //Scanner
         Scanner cin = new Scanner(System.in);
 
+        String line = "\n----------------------------------------------------------";
         //Variables
         String choice = "47";
         String menu = "     ~~Menu~~\n";
-        String askChoice = "Enter your choice: ";
         while(!choice.equals("0")){
-            System.out.println(menu + askChoice);
+            choice = "Enter your choice: ";
+            System.out.println(menu + choice);
             choice = cin.next();
+            switch(choice){
+                case "0":
+                    System.out.printf("Exiting...%s", line);
+                //----------------------------------------------------------
+                case "1":
+                //----------------------------------------------------------
+                //----------------------------------------------------------
+                //----------------------------------------------------------
+                //----------------------------------------------------------
+                //----------------------------------------------------------
+            }
         }
     }
 }
