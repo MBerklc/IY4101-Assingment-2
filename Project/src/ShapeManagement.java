@@ -9,7 +9,7 @@ public class ShapeManagement {
         String line = "\n----------------------------------------------------------";
         //Variables
         String choice = "47";
-        String menu = "          ~~~ Menu ~~~\n1. Add a shape\n";
+        String menu = "\n          ~~~ Menu ~~~\n1. Add a shape\n";
         menu += "2. Remove a shape by ID\n3. Get information about a shape by ID\n";
         menu += "4. Area and perimeter of a shape by ID\n5. Display information of all the shapes\n";
         menu+= "6. Translate all the shapes\n7. Scale all the shapes\n";
@@ -28,67 +28,37 @@ public class ShapeManagement {
                     break;
                     //----------------------------------------------------------
                 case "2":
-                    try {
-                        System.out.print("Enter ID to remove: ");
-                        int id = cin.nextInt();
-                        if(shapeList.isValid(id)) shapeList.removeShape(id);
-                        else System.out.println("Wrong ID try again...");
-                    } catch (Exception e) {
-                        System.out.println("Invalid input, please enter a number...");
-                        cin.next();
-                    }
+                    removeShape();
                     System.out.printf("Going back to main menu %s", line);
                     break;
                     //----------------------------------------------------------
                 case "3":
-                    try {
-                        System.out.print("Enter ID to display: ");
-                        int id = cin.nextInt();
-                        if(shapeList.isValid(id)) System.out.println(shapeList.getShape(id).display());
-                        else System.out.println("Wrong ID try again...");
-                    } catch (Exception e) {
-                        System.out.println("Invalid input, please enter a number...");
-                        cin.next();
-                    }
+                    getShape();
                     System.out.printf("Going back to main menu %s", line);
                     break;
                     //----------------------------------------------------------
                 case "4":
-                    try {
-                        System.out.print("Enter ID to display area and perimeter: ");
-                        int id = cin.nextInt();
-                        if(shapeList.isValid(id)){
-                            System.out.println(shapeList.getShape(id).display());
-                            System.out.printf("Area: %.2f%n", shapeList.area(id));
-                            System.out.printf("Perimeter: %.2f%n", shapeList.perimeter(id));
-                        }
-                        else System.out.println("Wrong ID try again...");
-                    } catch (Exception e) {
-                        System.out.println("Invalid input, please enter a number...");
-                        cin.next();
-                    }
+                    areaPerimeter();
                     System.out.printf("Going back to main menu %s", line);
                     break;
                     //----------------------------------------------------------
                 case "5":
-                    if (shapeList.size() == 0) System.out.printf("There is no saved shape %s", line);
-                    else {
-                        System.out.println("    ---Saved Shapes---");
-                        System.out.println(shapeList.display());
-                    }
-                    System.out.println(line);
+                    displayAll();
+                    System.out.printf("Going back to main menu %s", line);
                     break;
                     //----------------------------------------------------------
                 case "6":
-                    System.out.println(line);
+                    translateShapes();
+                    System.out.printf("Going back to main menu %s", line);
                     break;
                     //----------------------------------------------------------
                 case "7":
-                    System.out.println(line);
+                    scaleShapes();
+                    System.out.printf("Going back to main menu %s", line);
                     break;
                     //----------------------------------------------------------
                 default:
-                    System.out.println("Wrong input try again");
+                    System.out.printf("Wrong input try again, %s", line);
                     break;
                     //----------------------------------------------------------
             }
@@ -173,7 +143,83 @@ public class ShapeManagement {
             }
         }
     }
-    public void displayShape(){
+    private void removeShape(){
+        try {
+            System.out.print("Enter ID to remove: ");
+            int id = cin.nextInt();
+            if(shapeList.isValid(id)) shapeList.removeShape(id);
+            else System.out.println("Wrong ID try again...");
+        } catch (Exception e) {
+            System.out.println("Invalid input, please enter a number...");
+            cin.next();
+        }
+    }
 
+    private void getShape(){
+        try {
+            System.out.print("Enter ID to display: ");
+            int id = cin.nextInt();
+            if(shapeList.isValid(id)) System.out.println(shapeList.getShape(id).display());
+            else System.out.println("Wrong ID try again...");
+        } catch (Exception e) {
+            System.out.println("Invalid input, please enter a number...");
+            cin.next();
+        }
+    }
+
+    private void areaPerimeter(){
+        try {
+            System.out.print("Enter ID to display area and perimeter: ");
+            int id = cin.nextInt();
+            if(shapeList.isValid(id)){
+                System.out.println(shapeList.getShape(id).display());
+                System.out.printf("Area: %.2f%n", shapeList.area(id));
+                System.out.printf("Perimeter: %.2f%n", shapeList.perimeter(id));
+            }
+            else System.out.println("Wrong ID try again...");
+        } catch (Exception e) {
+            System.out.println("Invalid input, please enter a number...");
+            cin.next();
+        }
+    }
+
+    private void displayAll(){
+        if (shapeList.size() == 0) System.out.println("There is no saved shape");
+        else {
+            System.out.println("      ---Saved Shapes---");
+            System.out.println(shapeList.display() );
+        }
+    }
+    private void translateShapes(){
+        try {
+            System.out.print("Translate X value: ");
+            int dx = cin.nextInt();
+            System.out.print("Translate Y value: ");
+            int dy = cin.nextInt();
+            shapeList.translateShapes(dx, dy);
+            System.out.println("All shapes translated successfully!");
+        } catch (Exception e) {
+            System.out.println("Invalid input, please enter a number...");
+            cin.next();
+        }
+    }
+
+    private void scaleShapes(){
+        try {
+            int factor;
+            while(true){
+                System.out.print("Provide scaling factor: ");
+                factor = cin.nextInt();
+                if(factor != 0) break;
+                System.out.println("Factor zero is not acceptable!");
+            }
+            System.out.print("Provide scale sign (true/false): ");
+            boolean sign = cin.nextBoolean();
+            shapeList.scale(factor, sign);
+            System.out.println("All shapes scaled successfully!");
+        } catch (Exception e) {
+            System.out.println("Invalid input, please enter a number...");
+            cin.next();
+        }
     }
 }
